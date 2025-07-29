@@ -1,17 +1,38 @@
-import React from 'react';
-import './ItemListContainer.css';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import type { Product } from '../../data/products';
+import { getProducts, getProductsByCategory } from '../../data/products';
+import ItemList from './ItemList';
 
-interface ItemListContainerProps {
+type Props = {
   greeting: string;
-}
+};
 
-const ItemListContainer: React.FC<ItemListContainerProps> = ({ greeting }) => {
+function ItemListContainer({ greeting }: Props) {
+  const { categoryId } = useParams();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+
+    const fetchData = async () => {
+      const data = categoryId
+        ? await getProductsByCategory(categoryId)
+        : await getProducts();
+      setProducts(data);
+      setLoading(false);
+    };
+
+    fetchData();
+  }, [categoryId]);
+
   return (
-    <div className="item-list-container">
-      <h1>{greeting}</h1>
-      <p>Aquí se mostrará el catálogo de productos próximamente.</p>
+    <div style={{ padding: '2rem' }}>
+      <h2>{greeting}</h2>
+      {loading ? <p>Cargando productos...</p> : <ItemList products={products} />}
     </div>
   );
-};
+}
 
 export default ItemListContainer;
