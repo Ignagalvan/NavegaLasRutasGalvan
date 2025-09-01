@@ -22,7 +22,7 @@
 - [React Router DOM](https://reactrouter.com/)
 - [Firebase (Firestore)](https://firebase.google.com/)
 - [CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS)
-- [Vite](https://vitejs.dev/) (opcional si usaste Vite como builder)
+- [Vite](https://vitejs.dev/)
 
 ## 🛠 Estructura de componentes
 App
